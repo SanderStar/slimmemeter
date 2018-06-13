@@ -1,12 +1,24 @@
+import datetime
+
 print('Hello')
 
+class Meting:
+    datumtijd = None
+    i = 0
+    def __init__(self, a):
+        self.i = a
+        self.datumtijd = datetime.datetime.now()
+
+x = Meting(10)
+print(x.i, x.datumtijd)
+
+# Open uitvoer bestand
 with open("output.txt", "r") as ins:
     lines = []
     for line in ins:
         lines.append(line)
 
-print(lines)
-
+# Ontleed elke regel in het bestand
 for i in range(len(lines)):
     if lines[i][0:9] == "1-0:1.8.1":
         print("daldag     ", int(float(lines[i][10:20])*1000), "kWh")
