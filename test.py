@@ -1,19 +1,29 @@
 import datetime
 import uuid
 
+
 class Meting:
     # unieke id
     id = None
     # huidige datum + tijd 
-    datumtijd = None
-    i = 0
-    def __init__(self, a):
-        self.i = a
-        self.datumtijd = datetime.datetime.now()
+    datum_tijd = None
+    # kWh
+    elektra_levering_laag = None
+    elektra_levering_hoog = None
+    elektra_teruglevering_laag = None
+    elektra_teruglevering_hoog = None
+    # kW
+    elektra_levering_vermogen = None
+    elektra_teruglevering_vermogen = None
+    # m3
+    gas_levering = None
+
+    def __init__(self):
+        self.datum_tijd = datetime.datetime.now()
         self.id = uuid.uuid4()
 
-x = Meting(10)
-print(x.i, x.datumtijd, x.id)
+x = Meting()
+print(x.id, x.datum_tijd)
 
 # Open uitvoer bestand
 with open("output.txt", "r") as ins:
