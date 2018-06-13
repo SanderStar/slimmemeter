@@ -1,16 +1,19 @@
 import datetime
-
-print('Hello')
+import uuid
 
 class Meting:
+    # unieke id
+    id = None
+    # huidige datum + tijd 
     datumtijd = None
     i = 0
     def __init__(self, a):
         self.i = a
         self.datumtijd = datetime.datetime.now()
+        self.id = uuid.uuid4()
 
 x = Meting(10)
-print(x.i, x.datumtijd)
+print(x.i, x.datumtijd, x.id)
 
 # Open uitvoer bestand
 with open("output.txt", "r") as ins:
@@ -20,6 +23,7 @@ with open("output.txt", "r") as ins:
 
 # Ontleed elke regel in het bestand
 for i in range(len(lines)):
+    # TODO evt * 1000 eruit halen om echte waarden te bewaren
     if lines[i][0:9] == "1-0:1.8.1":
         print("daldag     ", int(float(lines[i][10:20])*1000), "kWh")
     elif lines[i][0:9] == "1-0:1.8.2":
