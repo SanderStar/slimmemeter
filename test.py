@@ -1,6 +1,7 @@
 import datetime
 import uuid
 import mysql.connector
+import sys
 
 
 class Meting:
@@ -24,7 +25,7 @@ class Meting:
         self.id = uuid.uuid4()
 
 
-# Open uitvoer bestand
+# Open uitvoer bestand tbv unit test
 with open("output.txt", "r") as ins:
     lines = []
     for line in ins:
@@ -64,25 +65,11 @@ for i in range(len(lines)):
     else:
         pass
 
-# Stuur naar database
-print(meting.id, 
-    meting.datum_tijd, 
-    meting.elektra_levering_hoog, 
-    meting.elektra_levering_laag,
-    meting.elektra_teruglevering_hoog,
-    meting.elektra_teruglevering_laag,
-    meting.elektra_levering_vermogen,
-    meting.elektra_teruglevering_vermogen,
-    meting.gas_levering)
+db = mysql.connector.connect(host="localhost",
+                     user="root",
+                     passwd="root",
+                     db="slimmemeter")
 
-db = mysql.connector.connect(host="localhost",    # your host, usually localhost
-                     user="root",         # your username
-                     passwd="root",  # your password
-                     db="slimmemeter")        # name of the data base
-
-
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
 cur = db.cursor()
 
 # TODO nice exception handling
@@ -98,10 +85,9 @@ try:
         meting.elektra_teruglevering_vermogen,
         meting.gas_levering) )
     db.commit()
-    print("succes")
 except:
-    print("error")
-    db.rollback()
+   db.rollback()
+   sys.exit("Inserting data in database fails")
 
 # Use all the SQL you like
 cur.execute("SELECT * FROM meting")
