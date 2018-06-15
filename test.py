@@ -1,5 +1,6 @@
 import datetime
 import uuid
+import mysql.connector
 
 
 class Meting:
@@ -73,3 +74,40 @@ print(meting.id,
     meting.elektra_levering_vermogen,
     meting.elektra_teruglevering_vermogen,
     meting.gas_levering)
+
+db = mysql.connector.connect(host="localhost",    # your host, usually localhost
+                     user="root",         # your username
+                     passwd="root",  # your password
+                     db="slimmemeter")        # name of the data base
+
+
+# you must create a Cursor object. It will let
+#  you execute all the queries you need
+cur = db.cursor()
+
+# TODO nice exception handling
+try:
+    cur.execute("INSERT INTO meting VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",  
+        ( None,
+        meting.datum_tijd, 
+        meting.elektra_levering_hoog, 
+        meting.elektra_levering_laag,
+        meting.elektra_teruglevering_hoog,
+        meting.elektra_teruglevering_laag,
+        meting.elektra_levering_vermogen,
+        meting.elektra_teruglevering_vermogen,
+        meting.gas_levering) )
+    db.commit()
+    print("succes")
+except:
+    print("error")
+    db.rollback()
+
+# Use all the SQL you like
+cur.execute("SELECT * FROM meting")
+
+# print the rows
+for row in cur.fetchall():
+    print(row)
+
+db.close()
