@@ -65,10 +65,11 @@ for i in range(len(lines)):
     else:
         pass
 
-db = mysql.connector.connect(host="localhost",
-                     user="root",
-                     passwd="root",
-                     db="slimmemeter")
+db = mysql.connector.connect(host="192.168.2.5",
+                     port="3307",
+                     user="slimmemeter",
+                     passwd="slimmemeter",
+                     db="star")
 
 cur = db.cursor()
 
